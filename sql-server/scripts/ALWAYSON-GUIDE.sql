@@ -4,8 +4,8 @@
 -- ============================================================
 
 -- CONNECTIONS NEEDED IN DBEAVER:
--- sql-primary   → localhost:1433  sa / Admin@1234
--- sql-secondary → localhost:1434  sa / Admin@1234
+-- sql-primary   → localhost:1433  sa / <YOUR_SA_PASSWORD>
+-- sql-secondary → localhost:1434  sa / <YOUR_SA_PASSWORD>
 
 
 -- ============================================================

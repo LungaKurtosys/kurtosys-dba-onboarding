@@ -29,7 +29,7 @@ docker network create sqlserver-ag
 
 ### 2. Start PRIMARY node
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin@1234" \
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=<YOUR_SA_PASSWORD>" \
   -e "MSSQL_AGENT_ENABLED=true" \
   -p 1433:1433 --name sql-primary \
   --network sqlserver-ag \
@@ -38,7 +38,7 @@ docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin@1234" \
 
 ### 3. Start SECONDARY node
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin@1234" \
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=<YOUR_SA_PASSWORD>" \
   -e "MSSQL_AGENT_ENABLED=true" \
   -p 1434:1433 --name sql-secondary \
   --network sqlserver-ag \
@@ -61,8 +61,8 @@ docker restart sql-primary sql-secondary
 
 | Connection   | Host      | Port | Username | Password   |
 |-------------|-----------|------|----------|------------|
-| sql-primary  | localhost | 1433 | sa       | Admin@1234 |
-| sql-secondary| localhost | 1434 | sa       | Admin@1234 |
+| sql-primary  | localhost | 1433 | sa       | <YOUR_SA_PASSWORD> |
+| sql-secondary| localhost | 1434 | sa       | <YOUR_SA_PASSWORD> |
 
 ## Testing
 
