@@ -1,0 +1,20 @@
+# Credentials and secrets
+*.env
+.env*
+secrets.*
+credentials.*
+*.key
+*.pem
+*.cer
+*.pfx
+
+# SQL Server backup files
+*.bak
+*.trn
+
+# OS files
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
