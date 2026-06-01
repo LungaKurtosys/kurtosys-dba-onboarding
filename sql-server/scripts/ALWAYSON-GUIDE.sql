@@ -52,9 +52,9 @@ CREATE TABLE Documents (
 );
 
 INSERT INTO Documents (ClientName, DocumentType) VALUES
-    ('JP Morgan',   'Fact Sheet'),
-    ('BNY Mellon',  'Report'),
-    ('BlackRock',   'Fund Report');
+    ('Client A',   'Fact Sheet'),
+    ('Client B',  'Report'),
+    ('Client D',   'Fund Report');
 
 
 -- ============================================================
@@ -115,7 +115,7 @@ WHERE db.name = 'EncoreDB';
 -- Insert more data and watch it replicate to secondary
 -- ============================================================
 INSERT INTO EncoreDB.dbo.Documents (ClientName, DocumentType)
-VALUES ('Vanguard', 'Annual Report');
+VALUES ('Client E', 'Annual Report');
 
 SELECT * FROM EncoreDB.dbo.Documents;
 
@@ -125,7 +125,7 @@ SELECT * FROM EncoreDB.dbo.Documents;
 -- Verify new record replicated to secondary
 -- ============================================================
 SELECT * FROM EncoreDB.dbo.Documents;
--- You should now see 4 records including Vanguard
+-- You should now see 4 records including Client E
 
 
 -- ============================================================
@@ -158,7 +158,7 @@ JOIN sys.dm_hadr_availability_replica_states ars
 -- Write data to the new primary to confirm it works
 -- ============================================================
 INSERT INTO EncoreDB.dbo.Documents (ClientName, DocumentType)
-VALUES ('Fidelity', 'Quarterly Report');
+VALUES ('Client F', 'Quarterly Report');
 
 SELECT * FROM EncoreDB.dbo.Documents;
 
@@ -168,7 +168,7 @@ SELECT * FROM EncoreDB.dbo.Documents;
 -- Verify data replicated back to old primary
 -- ============================================================
 SELECT * FROM EncoreDB.dbo.Documents;
--- You should see all 5 records including Fidelity
+-- You should see all 5 records including Client F
 
 
 -- ============================================================

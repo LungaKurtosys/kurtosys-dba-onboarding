@@ -68,20 +68,20 @@ Always On Availability Groups is a SQL Server high availability solution that:
 - 2 SQL Server 2022 nodes running in Docker
 - Always On Availability Group named `EncoreAG`
 - Database: `EncoreDB` (simulating the Encore app database)
-- Table: `Documents` with client data (JP Morgan, BNY Mellon, etc.)
+- Table: `Documents` with client data (Client A, Client B, etc.)
 
 ### 4.3 Replication Test Results
 Data inserted on PRIMARY automatically replicated to SECONDARY:
 
 | Id | ClientName    | DocumentType     | CreatedAt           |
 |----|--------------|------------------|---------------------|
-| 1  | JP Morgan    | Fact Sheet       | 2026-06-01 13:37:05 |
-| 2  | BNY Mellon   | Report           | 2026-06-01 13:37:05 |
-| 3  | Goldman Sachs| Fact Sheet       | 2026-06-01 15:05:40 |
-| 4  | BlackRock    | Fund Report      | 2026-06-01 15:05:40 |
-| 5  | Vanguard     | Annual Report    | 2026-06-01 15:05:40 |
-| 6  | Fidelity     | Quarterly Report | 2026-06-01 15:05:40 |
-| 7  | Morgan Stanley| Market Report   | 2026-06-01 15:05:40 |
+| 1  | Client A    | Fact Sheet       | 2026-06-01 13:37:05 |
+| 2  | Client B   | Report           | 2026-06-01 13:37:05 |
+| 3  | Client C| Fact Sheet       | 2026-06-01 15:05:40 |
+| 4  | Client D    | Fund Report      | 2026-06-01 15:05:40 |
+| 5  | Client E     | Annual Report    | 2026-06-01 15:05:40 |
+| 6  | Client F     | Quarterly Report | 2026-06-01 15:05:40 |
+| 7  | Client G| Market Report   | 2026-06-01 15:05:40 |
 
 ✅ All records replicated successfully to SECONDARY node
 
