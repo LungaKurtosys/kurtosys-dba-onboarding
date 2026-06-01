@@ -18,7 +18,7 @@ All testing was done locally using Docker on macOS.
 
 | Technology      | Purpose                                      | Status        |
 |----------------|----------------------------------------------|---------------|
-| SQL Server 2022 | Legacy database for Encore app               | ✅ Completed  |
+| SQL Server 2022 | Legacy database for internal app               | ✅ Completed  |
 | Always On AG    | High availability and automatic failover     | ✅ Completed  |
 | DBeaver         | GUI client (equivalent of SSMS on Mac)       | ✅ Completed  |
 | Zabbix          | Server monitoring and alerting               | ✅ Completed  |
@@ -43,7 +43,7 @@ All testing was done locally using Docker on macOS.
 │                      ↓                                  │
 │  ┌─────────────────────────────────────────┐           │
 │  │         Always On Availability Group    │           │
-│  │              EncoreAG                   │           │
+│  │              SampleAG                   │           │
 │  └─────────────────────────────────────────┘           │
 │                                                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
@@ -62,12 +62,12 @@ Always On Availability Groups is a SQL Server high availability solution that:
 - Keeps a copy of the database on a secondary server
 - Automatically syncs data from primary to secondary
 - Allows manual or automatic failover if primary goes down
-- Used by Kurtosys for the Encore application in production
+- Used by Kurtosys for the internal application in production
 
 ### 4.2 What Was Built
 - 2 SQL Server 2022 nodes running in Docker
-- Always On Availability Group named `EncoreAG`
-- Database: `EncoreDB` (simulating the Encore app database)
+- Always On Availability Group named `SampleAG`
+- Database: `SampleDB` (simulating the internal app database)
 - Table: `Documents` with client data (Client A, Client B, etc.)
 
 ### 4.3 Replication Test Results
@@ -89,7 +89,7 @@ Data inserted on PRIMARY automatically replicated to SECONDARY:
 Manual failover was performed by running on SECONDARY:
 ```sql
 USE master;
-ALTER AVAILABILITY GROUP [EncoreAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
+ALTER AVAILABILITY GROUP [SampleAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
 ```
 
 Results after failover:
@@ -190,7 +190,7 @@ Alert clears               →     incident.io sends resolved notification
 
 ## 7. Key Learnings
 
-1. **SQL Server Always On** — High availability solution used for Encore app at Kurtosys
+1. **SQL Server Always On** — High availability solution used for internal app at Kurtosys
 2. **Primary vs Secondary** — Primary handles all writes, secondary is a live synced copy
 3. **Manual Failover** — Secondary can be promoted to primary when primary goes down
 4. **Zabbix Monitoring** — Monitors server health and fires alerts like incident.io
@@ -203,7 +203,7 @@ Alert clears               →     incident.io sends resolved notification
 
 - [ ] Percona PMM — connect database for performance monitoring
 - [ ] Backup and Restore — practice taking and restoring SQL Server backups
-- [ ] Standalone instance setup — mirror the dev environment (EW1DMS-SQL-01)
+- [ ] Standalone instance setup — mirror the dev environment (dev-sql-01)
 
 ---
 

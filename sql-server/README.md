@@ -11,7 +11,7 @@ A local setup to practice SQL Server Always On Availability Groups using Docker.
 ## Architecture
 ```
 PRIMARY (port 1433)         SECONDARY (port 1434)
-├── EncoreDB           →    ├── EncoreDB (synced)
+├── SampleDB           →    ├── SampleDB (synced)
 ├── All writes here    →    ├── Read only replica
 └── Main node          →    └── Standby for failover
 ```
@@ -83,8 +83,8 @@ JOIN sys.dm_hadr_availability_replica_states ars ON ar.replica_id = ars.replica_
 
 Expected result:
 ```
-EncoreAG  sql-primary    PRIMARY    HEALTHY  CONNECTED
-EncoreAG  sql-secondary  SECONDARY  HEALTHY  CONNECTED
+SampleAG  sql-primary    PRIMARY    HEALTHY  CONNECTED
+SampleAG  sql-secondary  SECONDARY  HEALTHY  CONNECTED
 ```
 
 ### Test Replication
@@ -96,7 +96,7 @@ EncoreAG  sql-secondary  SECONDARY  HEALTHY  CONNECTED
 Run on SECONDARY (port 1434):
 ```sql
 USE master;
-ALTER AVAILABILITY GROUP [EncoreAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
+ALTER AVAILABILITY GROUP [SampleAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
 ```
 
 After failover:

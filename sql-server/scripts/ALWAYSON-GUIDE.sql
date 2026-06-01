@@ -19,14 +19,14 @@ SELECT @@SERVERNAME AS ServerName, @@VERSION AS Version;
 -- STEP 2: RUN ON sql-primary
 -- Create the database
 -- ============================================================
-CREATE DATABASE EncoreDB;
+CREATE DATABASE SampleDB;
 
 
 -- ============================================================
 -- STEP 3: RUN ON sql-primary
 -- Set recovery model to FULL (required for Always On)
 -- ============================================================
-ALTER DATABASE EncoreDB SET RECOVERY FULL;
+ALTER DATABASE SampleDB SET RECOVERY FULL;
 
 
 -- ============================================================
@@ -35,14 +35,14 @@ ALTER DATABASE EncoreDB SET RECOVERY FULL;
 -- ============================================================
 SELECT name, recovery_model_desc 
 FROM sys.databases 
-WHERE name = 'EncoreDB';
+WHERE name = 'SampleDB';
 
 
 -- ============================================================
 -- STEP 5: RUN ON sql-primary
 -- Create the Documents table and insert test data
 -- ============================================================
-USE EncoreDB;
+USE SampleDB;
 
 CREATE TABLE Documents (
     Id           INT PRIMARY KEY IDENTITY,
@@ -61,7 +61,7 @@ INSERT INTO Documents (ClientName, DocumentType) VALUES
 -- STEP 6: RUN ON sql-primary
 -- Verify data was inserted
 -- ============================================================
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 
 
 -- ============================================================
@@ -93,7 +93,7 @@ JOIN sys.dm_hadr_availability_replica_states ars
 -- STEP 9: RUN ON sql-secondary
 -- Verify SECONDARY has the same data (replication working)
 -- ============================================================
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 
 
 -- ============================================================
@@ -107,24 +107,24 @@ SELECT
     drs.is_primary_replica              AS IsPrimary
 FROM sys.dm_hadr_database_replica_states drs
 JOIN sys.databases db ON drs.database_id = db.database_id
-WHERE db.name = 'EncoreDB';
+WHERE db.name = 'SampleDB';
 
 
 -- ============================================================
 -- STEP 11: RUN ON sql-primary
 -- Insert more data and watch it replicate to secondary
 -- ============================================================
-INSERT INTO EncoreDB.dbo.Documents (ClientName, DocumentType)
+INSERT INTO SampleDB.dbo.Documents (ClientName, DocumentType)
 VALUES ('Client E', 'Annual Report');
 
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 
 
 -- ============================================================
 -- STEP 12: RUN ON sql-secondary
 -- Verify new record replicated to secondary
 -- ============================================================
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 -- You should now see 4 records including Client E
 
 
@@ -133,7 +133,7 @@ SELECT * FROM EncoreDB.dbo.Documents;
 -- RUN ON sql-secondary
 -- Promote secondary to become the new PRIMARY
 -- ============================================================
-ALTER AVAILABILITY GROUP [EncoreAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
+ALTER AVAILABILITY GROUP [SampleAG] FORCE_FAILOVER_ALLOW_DATA_LOSS;
 
 
 -- ============================================================
@@ -157,17 +157,17 @@ JOIN sys.dm_hadr_availability_replica_states ars
 -- STEP 15: RUN ON sql-secondary (new PRIMARY)
 -- Write data to the new primary to confirm it works
 -- ============================================================
-INSERT INTO EncoreDB.dbo.Documents (ClientName, DocumentType)
+INSERT INTO SampleDB.dbo.Documents (ClientName, DocumentType)
 VALUES ('Client F', 'Quarterly Report');
 
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 
 
 -- ============================================================
 -- STEP 16: RUN ON sql-primary (now SECONDARY)
 -- Verify data replicated back to old primary
 -- ============================================================
-SELECT * FROM EncoreDB.dbo.Documents;
+SELECT * FROM SampleDB.dbo.Documents;
 -- You should see all 5 records including Client F
 
 
