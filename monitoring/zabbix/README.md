@@ -7,7 +7,7 @@ Local Zabbix setup to monitor SQL Server Primary and Secondary nodes.
 sql-primary   ──→ Zabbix Agent ──→ Zabbix Server ──→ Zabbix Web UI (port 8080)
 sql-secondary ──→ Zabbix Agent ──/                         ↓
                                                       Alerts/Triggers
-                                                      (like incident.io at Katosis)
+                                                      (like incident.io at Kurtosys)
 ```
 
 ## Access
@@ -83,8 +83,8 @@ docker start sql-primary sql-secondary
 
 Alerts clear automatically — servers back to normal.
 
-## How This Relates to Katosis
-- Katosis uses Zabbix to monitor SQL Server VMs
+## How This Relates to Kurtosys
+- Kurtosys uses Zabbix to monitor SQL Server VMs
 - When a server goes down Zabbix fires an alert
 - Alert goes to incident.io
 - incident.io calls the on-call DBA on their phone

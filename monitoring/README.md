@@ -33,7 +33,7 @@ docker compose down
 ### Zabbix
 - Monitors server health (CPU, memory, disk)
 - Sends alerts when something goes wrong
-- On-call alerting (like incident.io at Katosis)
+- On-call alerting (like incident.io at Kurtosys)
 - Tracks SQL Server availability
 
 ### Percona PMM
